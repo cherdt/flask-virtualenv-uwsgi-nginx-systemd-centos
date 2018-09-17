@@ -34,6 +34,13 @@
     name: virtualenv
     state: latest
 
+# This is a terrible idea, but I haven't developed 
+# an appropriate SELinux policy yet
+- name: set SELinux in permissive mode
+  selinux:
+    policy: targeted
+    state: permissive
+
 - name: create target app directory
   file:
     path: /srv/sampleapp
