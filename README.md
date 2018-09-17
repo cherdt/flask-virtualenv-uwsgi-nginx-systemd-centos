@@ -20,3 +20,7 @@ Edit `hosts` as desired (default is localhost).
 	yum install git
 	yum install ansible
 	ansible-playbook -k -i hosts site.yml
+
+Assuming no errors occurred, you should now be able to make a request to the app:
+
+    curl http://127.0.0.1/?text=hi
