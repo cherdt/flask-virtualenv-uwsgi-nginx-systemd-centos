@@ -12,13 +12,12 @@ Instructions
 
 On a CentOS 7 box:
 
+	yum install git
+	yum install ansible
     git clone [this repo]
 
 Edit `hosts` as desired (default is localhost).
 
-	yum install epel-release
-	yum install git
-	yum install ansible
 	ansible-playbook -k -i hosts site.yml
 
 Assuming no errors occurred, you should now be able to make a request to the app:
