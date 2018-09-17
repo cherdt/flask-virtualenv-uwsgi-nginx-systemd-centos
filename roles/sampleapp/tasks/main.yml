@@ -58,11 +58,14 @@
 
 - name: copy sample app
   copy:
-    src: chatbot.py
-    dest: /srv/sampleapp/chatbot.py
+    src: "{{ item }}"
+    dest: "/srv/sampleapp/{{ item }}"
     owner: nginx
     group: nginx
     mode: 0755
+  with_items:
+    - chatbot.py
+    - sampleapp.ini
 
 - name: copy systemd service file
   copy:

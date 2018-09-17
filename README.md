@@ -12,7 +12,11 @@ Instructions
 
 On a CentOS 7 box:
 
+    git clone [this repo]
+
+Edit `hosts` as desired (default is localhost).
+
 	yum install epel-release
 	yum install git
 	yum install ansible
-	ansible-playbook site.yml
+	ansible-playbook -k -i hosts site.yml
