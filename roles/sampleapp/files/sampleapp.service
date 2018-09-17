@@ -1,0 +1,17 @@
+[Unit]
+Description=sampleapp
+After=network.target
+AssertPathExists=/srv/sampleapp
+AssertPathExists=/srv/sampleapp/sampleappenv/bin
+
+[Service]
+Type=simple
+Environment=PATH=/srv/sampleapp/sampleappenv/bin
+PermissionsStartOnly=true
+ExecStartPre=-/usr/bin/bash -c 'mkdir -p /run/uwsgi; chown nginx:nginx /run/uwsgi'
+ExecStart=/usr/bin/bash -c 'cd /srv/sampleapp; source sampleappenv/bin/activate; uwsgi --ini sampleapp.ini'
+User=nginx
+Group=nginx
+
+[Install]
+WantedBy=multi-user.target

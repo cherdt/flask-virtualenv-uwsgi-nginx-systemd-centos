@@ -1,0 +1,91 @@
+---
+
+- name: install epel-release
+  yum:
+    name: epel-release
+    state: latest
+
+- name: install nginx
+  yum:
+    name: nginx
+    state: latest
+
+- name: start and enable nginx
+  systemd:
+    name: nginx
+    enabled: yes
+    state: started
+
+- name: install devel tools
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - "@development-tools"
+    - "python-devel"
+
+- name: install pip
+  yum:
+    name: python-pip
+    state: latest
+
+- name: install virtualenv
+  pip:
+    name: virtualenv
+    state: latest
+
+- name: create target app directory
+  file:
+    path: /srv/sampleapp
+    state: directory
+
+- name: install uwsgi
+  pip:
+    name: uwsgi
+    virtualenv: /srv/sampleapp/sampleappenv
+    state: latest
+
+- name: install other python modules
+  pip:
+    name: "{{ item }}" 
+    virtualenv: /srv/sampleapp/sampleappenv
+    state: latest
+  with_items:
+    - flask
+    - flask_cors
+    - nltk
+    - requests
+
+- name: copy sample app
+  copy:
+    src: chatbot.py
+    dest: /srv/sampleapp/chatbot.py
+    owner: nginx
+    group: nginx
+    mode: 0755
+
+- name: copy systemd service file
+  copy:
+    src: sampleapp.service
+    dest: /etc/systemd/system/sampleapp.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: start and enable sampleapp
+  systemd:
+    name: sampleapp.service
+    enabled: yes
+    state: started
+
+- name: copy sampleapp nginx conf
+  copy:
+    src: sampleapp.conf
+    dest: /etc/nginx/conf.d/sampleapp.conf
+    user: root
+    group: root
+    mode: 0644
+  notify:
+    - restart nginx
+
+...

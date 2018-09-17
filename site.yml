@@ -1,0 +1,8 @@
+---
+
+- name: set up a sample Flask app
+  hosts: targets
+  roles:
+  - sampleapp
+
+...
