@@ -15,6 +15,7 @@ On a CentOS 7 box:
 	yum install git
 	yum install ansible
     git clone [this repo]
+    cd flask-virtualenv-uwsgi-nginx-systemd-centos
 
 Edit `hosts` as desired (default is localhost).
 
