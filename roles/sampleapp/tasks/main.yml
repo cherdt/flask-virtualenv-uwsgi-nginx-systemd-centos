@@ -21,7 +21,7 @@
     name: "{{ item }}"
     state: latest
   with_items:
-    - "@development-tools"
+    - "@Development tools"
     - "python-devel"
 
 - name: install pip
@@ -82,7 +82,7 @@
   copy:
     src: sampleapp.conf
     dest: /etc/nginx/conf.d/sampleapp.conf
-    user: root
+    owner: root
     group: root
     mode: 0644
   notify:
